@@ -51,7 +51,7 @@ public class NotebookParserControllerTest {
             .responseMessage("Success")
             .response(notebookTextDTO)
             .build();
-    doReturn(notebookTextDTO).when(notebookParserService).getFrequesncyAndSimilarWords(any());
+    doReturn(notebookTextDTO).when(notebookParserService).getFrequencyAndSimilarWords(any());
     Response actualResponse =
         notebookParserController.getFrequecncyAndSimilarWords(notebookTextRequest);
     assertEquals(expectedResponse.getResponseCode(), actualResponse.getResponseCode());

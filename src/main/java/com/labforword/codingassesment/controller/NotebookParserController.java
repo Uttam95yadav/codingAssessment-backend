@@ -20,10 +20,10 @@ public class NotebookParserController {
   private final NotebookParserService notebookParserService;
 
   @PostMapping("/notebookparser")
-  public Response<?> getFrequecncyAndSimilarWords(@Valid @RequestBody NotebookTextRequest notebookTextRequest){
+  public Response<?> getFrequencyAndSimilarWords(@Valid @RequestBody NotebookTextRequest notebookTextRequest){
     try{
       return Response.builder()
-          .response(notebookParserService.getFrequesncyAndSimilarWords(notebookTextRequest))
+          .response(notebookParserService.getFrequencyAndSimilarWords(notebookTextRequest))
           .responseCode(200)
           .responseMessage("Success")
           .build();
