@@ -5,12 +5,11 @@ import com.labforword.codingassesment.models.NotebookTextRequest;
 import com.labforword.codingassesment.models.Response;
 import com.labforword.codingassesment.service.NotebookParserService;
 import java.util.ArrayList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,7 +22,6 @@ import static org.mockito.Mockito.doReturn;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = NotebookParserController.class)
 @WebMvcTest
-@WithMockUser(authorities = {"athena/service/RefreshManagement.TestDriveApp.read"})
 public class NotebookParserControllerTest {
 
   @Autowired private NotebookParserController notebookParserController;
@@ -31,17 +29,17 @@ public class NotebookParserControllerTest {
   @MockBean private NotebookParserService notebookParserService;
 
   @Test
-  public void whengetFrequesncyAndSimilarWordsIsCalled_CheckWhetherSuccessResponseIsReturned() {
-    List<String> similarwods = new ArrayList<>();
-    similarwods.add("word");
-    similarwods.add("wor");
-    similarwods.add("words");
+  public void whenCalculateFrequesncyAndSimilarWordsIsCalled_CheckWhetherSuccessResponseIsReturned() {
+    List<String> similarWords = new ArrayList<>();
+    similarWords.add("word");
+    similarWords.add("wor");
+    similarWords.add("words");
     NotebookTextDTO notebookTextDTO =
         NotebookTextDTO.builder()
             .word("word")
             .notebookText("word wor words")
             .wordFrequency(1)
-            .similarWords(similarwods)
+            .similarWords(similarWords)
             .build();
     NotebookTextRequest notebookTextRequest =
         NotebookTextRequest.builder().word("word").notebookText("word wor words").build();
@@ -51,9 +49,9 @@ public class NotebookParserControllerTest {
             .responseMessage("Success")
             .response(notebookTextDTO)
             .build();
-    doReturn(notebookTextDTO).when(notebookParserService).getFrequencyAndSimilarWords(any());
+    doReturn(notebookTextDTO).when(notebookParserService).calculateFrequencyAndSimilarWords(any());
     Response actualResponse =
-        notebookParserController.getFrequecncyAndSimilarWords(notebookTextRequest);
+        notebookParserController.calculateFrequencyAndSimilarWords(notebookTextRequest);
     assertEquals(expectedResponse.getResponseCode(), actualResponse.getResponseCode());
     assertEquals(expectedResponse.getResponseMessage(), actualResponse.getResponseMessage());
     assertEquals(expectedResponse.getResponse(), actualResponse.getResponse());

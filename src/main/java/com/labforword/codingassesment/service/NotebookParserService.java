@@ -2,8 +2,8 @@ package com.labforword.codingassesment.service;
 
 import com.labforword.codingassesment.models.NotebookTextDTO;
 import com.labforword.codingassesment.models.NotebookTextRequest;
+import com.labforword.codingassesment.utils.LevenshteinDistance;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,32 +11,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class NotebookParserService {
-  static int compute_Levenshtein_distance(String str1, String str2) {
-    if (str1.isEmpty()) {
-      return str2.length();
-    }
-    if (str2.isEmpty()) {
-      return str1.length();
-    }
-    int replace =
-        compute_Levenshtein_distance(str1.substring(1), str2.substring(1))
-            + NumOfReplacement(str1.charAt(0), str2.charAt(0));
+  private final LevenshteinDistance levenshteinDistance;
 
-    int insert = compute_Levenshtein_distance(str1, str2.substring(1)) + 1;
-
-    int delete = compute_Levenshtein_distance(str1.substring(1), str2) + 1;
-    return minm_edits(replace, insert, delete);
-  }
-
-  static int NumOfReplacement(char c1, char c2) {
-    return c1 == c2 ? 0 : 1;
-  }
-
-  static int minm_edits(int... nums) {
-    return Arrays.stream(nums).min().orElse(Integer.MAX_VALUE);
-  }
-
-  public NotebookTextDTO getFrequencyAndSimilarWords(NotebookTextRequest notebookTextRequest) {
+  public NotebookTextDTO calculateFrequencyAndSimilarWords(
+      NotebookTextRequest notebookTextRequest) {
     return NotebookTextDTO.builder()
         .word(notebookTextRequest.getWord())
         .notebookText(notebookTextRequest.getNotebookText())
@@ -51,7 +29,7 @@ public class NotebookParserService {
     List<String> similarWords = new ArrayList<String>();
     for (String notebookWord : notebookText.split("\\s+")) {
       if (!similarWords.stream().anyMatch(similarWord -> similarWord.equalsIgnoreCase(notebookWord))
-          && compute_Levenshtein_distance(word, notebookWord) <= 1) {
+          && levenshteinDistance.compute_Levenshtein_distance(word, notebookWord) <= 1) {
         similarWords.add(notebookWord);
       }
     }
