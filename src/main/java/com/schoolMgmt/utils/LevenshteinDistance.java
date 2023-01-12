@@ -1,4 +1,4 @@
-package com.labforword.codingassesment.utils;
+package com.schoolMgmt.utils;
 
 import java.util.Arrays;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,10 @@
-package com.labforword.codingassesment.controller;
+package com.schoolMgmt.controller;
 
-import com.labforword.codingassesment.models.NotebookTextDTO;
-import com.labforword.codingassesment.models.NotebookTextRequest;
-import com.labforword.codingassesment.models.Response;
-import com.labforword.codingassesment.service.NotebookParserService;
+import com.schoolMgmt.controller.StudentManagementController;
+import com.schoolMgmt.models.Student;
+import com.schoolMgmt.models.StudentSignupRequest;
+import com.schoolMgmt.models.Response;
+import com.schoolMgmt.service.StudentManagementService;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -20,13 +21,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = NotebookParserController.class)
+@ContextConfiguration(classes = StudentManagementController.class)
 @WebMvcTest
-public class NotebookParserControllerTest {
+public class StudentManagementControllerTest {
 
-  @Autowired private NotebookParserController notebookParserController;
+  @Autowired private StudentManagementController studentManagementController;
 
-  @MockBean private NotebookParserService notebookParserService;
+  @MockBean private StudentManagementService studentManagementService;
 
   @Test
   public void whenCalculateFrequesncyAndSimilarWordsIsCalled_CheckWhetherSuccessResponseIsReturned() {
@@ -34,24 +35,24 @@ public class NotebookParserControllerTest {
     similarWords.add("word");
     similarWords.add("wor");
     similarWords.add("words");
-    NotebookTextDTO notebookTextDTO =
-        NotebookTextDTO.builder()
-            .word("word")
-            .notebookText("word wor words")
-            .wordFrequency(1)
-            .similarWords(similarWords)
+    Student student =
+        Student.builder()
+            .firstName("uttam")
+            .lastName("yadav")
+            .email("uttamkumaryadav95@gmail.com")
+            .garde("7th")
             .build();
-    NotebookTextRequest notebookTextRequest =
-        NotebookTextRequest.builder().word("word").notebookText("word wor words").build();
+    StudentSignupRequest studentSignupRequest =
+        StudentSignupRequest.builder().firstName("word").lastName("word wor words").build();
     Response expectedResponse =
         Response.builder()
             .responseCode(200)
             .responseMessage("Success")
-            .response(notebookTextDTO)
+            .response(student)
             .build();
-    doReturn(notebookTextDTO).when(notebookParserService).calculateFrequencyAndSimilarWords(any());
+    doReturn(student).when(studentManagementService).studentSignUp(any());
     Response actualResponse =
-        notebookParserController.calculateFrequencyAndSimilarWords(notebookTextRequest);
+        studentManagementController.calculateFrequencyAndSimilarWords(studentSignupRequest);
     assertEquals(expectedResponse.getResponseCode(), actualResponse.getResponseCode());
     assertEquals(expectedResponse.getResponseMessage(), actualResponse.getResponseMessage());
     assertEquals(expectedResponse.getResponse(), actualResponse.getResponse());

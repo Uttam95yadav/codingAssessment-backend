@@ -1,4 +1,4 @@
-package com.labforword.codingassesment.models;
+package com.schoolMgmt.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

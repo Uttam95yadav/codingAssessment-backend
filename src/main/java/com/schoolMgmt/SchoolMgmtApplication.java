@@ -1,13 +1,13 @@
-package com.labforword.codingassesment;
+package com.schoolMgmt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CodingassesmentApplication {
+public class SchoolMgmtApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CodingassesmentApplication.class, args);
+		SpringApplication.run(SchoolMgmtApplication.class, args);
 	}
 
 }

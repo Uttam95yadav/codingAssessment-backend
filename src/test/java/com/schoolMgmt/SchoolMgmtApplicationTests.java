@@ -1,10 +1,10 @@
-package com.labforword.codingassesment;
+package com.schoolMgmt;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CodingassesmentApplicationTests {
+class SchoolMgmtApplicationTests {
 
 	@Test
 	void contextLoads() {
